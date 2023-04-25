@@ -39,6 +39,18 @@ It makes the whole inner if statement not needed anymore, however I did not dele
 <#assign basePagingQry = "SELECT count(*) FROM messages WHERE depth = 0 AND board.id = '${coreNode.id}' " />
 <#assign whereClause = label_query />
  
+<#--
+I added 4 more cases to the sorting switch statement. 
+Those are: "newest", "kudoASC", "unansweredQuestion" and "noSolution" respectively 
+as in the order suggested in the third exercise's description.
+I looked up the names of needed fields for the ORDER BY clauses from the baseQry variable.
+I added those 4 cases before the default case as I believe it is the most common convention.
+
+Then, I added those cases as options to already existing ones 
+located within the select tag with id="community-activity-sorted-by". In each option,
+I updated the names of the clauses in respective places.
+-->
+
 <#switch sorting>
    <#case "kudos">
        <#assign orderClause = "ORDER BY kudos.sum(weight) DESC " />
@@ -48,6 +60,18 @@ It makes the whole inner if statement not needed anymore, however I did not dele
    <#break>
    <#case "replies">
        <#assign orderClause = "ORDER BY replies.count(*) DESC " />
+   <#break>
+   <#case "newest">
+       <#assign orderClause = "ORDER BY post_time DESC " />
+   <#break>
+   <#case "kudosASC">
+       <#assign orderClause = "ORDER BY kudos.sum(weight) ASC " />
+   <#break>
+   <#case "unansweredQuestion">
+       <#assign orderClause = "ORDER BY replies.count(*) ASC " />
+   <#break>
+   <#case "noSolution">
+       <#assign orderClause = "ORDER BY conversation.solved " />
    <#break>
    <#default>
        <#assign orderClause = "ORDER BY conversation.last_post_time DESC " />
@@ -81,6 +105,10 @@ It makes the whole inner if statement not needed anymore, however I did not dele
                    <option value="views" <#if sorting == 'views'>selected</#if>>${text.format("theme-lib.community-activity.views")}</option>
                    <option value="replies" <#if sorting == 'replies'>selected</#if>>${text.format("theme-lib.community-activity.replies")}</option>
                    <option value="kudos" <#if sorting == 'kudos'>selected</#if>>${text.format("theme-lib.community-activity.kudos")}</option>
+                   <option value="newest" <#if sorting == 'newest'>selected</#if>>${text.format("theme-lib.community-activity.newest")}</option>
+                   <option value="kudosASC" <#if sorting == 'kudosASC'>selected</#if>>${text.format("theme-lib.community-activity.kudosASC")}</option>
+                   <option value="unansweredQuestion" <#if sorting == 'unansweredQuestion'>selected</#if>>${text.format("theme-lib.community-activity.unansweredQuestion")}</option>
+                   <option value="noSolution" <#if sorting == 'noSolution'>selected</#if>>${text.format("theme-lib.community-activity.noSolution")}</option>
                </select>
                <#if page.interactionStyle=="idea">
                  <@component id="custom.idea.status.label" />
@@ -157,7 +185,9 @@ It makes the whole inner if statement not needed anymore, however I did not dele
 <#-- 
 I have changed the name of the "solved" variable to "cool-class-name" as this variable
 is used to assign the name of the class of an element with an <i> tag and an article
-of the custom message tile later in the code.
+of the custom message tile later in the code. I figured this is the variable
+used for the class for solved threads, as within the same if statement 
+the msg_status_text is changed to a string with information "thread-solved".
 -->
    <#if msg.conversation.solved>
        <#assign solved = "cool-class-name" />
