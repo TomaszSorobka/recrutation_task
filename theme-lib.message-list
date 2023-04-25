@@ -7,11 +7,16 @@
 <#assign sorting = http.request.parameters.name.get("sort", "") />
  
 <#-- page size -->
-<#assign pageSize = coreNode.settings.name.get("layout.messages_per_page_linear", "10")?number />
+<#-- mycomment
+I have set the pageSize variable to exactly 30. I have set it to 30 within the if statement as well,
+as we want for it to always be a specific number, so it prevents overwriting it again with some other value.
+It makes the whole inner if statement not needed anymore, however I did not delete it as maybe this is a temporary change.
+-->
+<#assign pageSize = 30 />
 <#if user.registered>
    <#assign pageSizeUser = settings.name.get("layout.messages_per_page_linear") />
    <#if pageSizeUser?number != pageSize?number>
-       <#assign pageSize = pageSizeUser />
+       <#assign pageSize = 30 />
    </#if>
 </#if>
  
