@@ -813,8 +813,8 @@ span.lia-button-link-arrow.lia-button-link-arrow-black {
   <img src="https://community.dynatrace.com/html/assets/wave-blue-2.png">
 </div>
 
-<div class="map-wrapper">
-  <div class="map-content">
+<div class="map-wrapper" >
+  <div class="map-content" id = "mapElement">
     <div class="map-content-title">
       <div class="map-content-title-light">
         <p>Become a part of <b>global community</b></p>
@@ -1067,6 +1067,20 @@ span.lia-button-link-arrow.lia-button-link-arrow-black {
     </div>
   </div>
 </div>
+<script>
+  const mapButtonDiv = document.createElement("div");
+  const mapElement = document.getElementById('mapElement');
+  const mapButton = document.createElement("button");
+
+  mapButton.addEventListener('click', () => {
+        window.open('https://google.com/maps');
+    });
+  mapButton.innerHTML = "View Google Maps"
+  mapButton.style.backgroundColor = "violet";
+
+  mapButtonDiv.appendChild(mapButton);
+  mapElement.appendChild(mapButtonDiv);
+</script>
 
 </body>
 </html>
