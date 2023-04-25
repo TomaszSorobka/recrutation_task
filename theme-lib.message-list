@@ -153,8 +153,14 @@ It makes the whole inner if statement not needed anymore, however I did not dele
        <#assign msg_status_icon = "custom-thread-floated" />
        <#assign msg_status_txt = "theme-lib.general.thread-floated" />
    </#if>
+
+<#-- 
+I have changed the name of the "solved" variable to "cool-class-name" as this variable
+is used to assign the name of the class of an element with an <i> tag and an article
+of the custom message tile later in the code.
+-->
    <#if msg.conversation.solved>
-       <#assign solved = "custom-thread-solved" />
+       <#assign solved = "cool-class-name" />
        <#assign msg_status_icon = "custom-thread-solved" />
        <#assign msg_status_txt = "theme-lib.general.thread-solved" />
    </#if>
